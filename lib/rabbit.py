@@ -12,54 +12,62 @@
 
 import pika, json
 
-testJson = {"message": "Hi"}
-myJson = json.dumps(testJson)
+# CONNECTION SETTINGS
+SERVERNAME = "localhost"
+QUEUENAME = "ist411"
 
-class Broker:
+# base class for connection settings
+class BrokerBase:
 
-	# must be a json string object
+	def connect(self):
+		print("Connecting to Localhost Queue")
+		self.connection = pika.BlockingConnection(pika.ConnectionParameters(SERVERNAME))
+		self.channel = self.connection.channel()
+		self.channel.queue_declare(queue=QUEUENAME)
+
+class Sender(BrokerBase):
+
 	def __init__(self, json):
 		self.json = json
+		self.connect()
 
 	# returns true to indicate successful transmission else throws exception
+	# must be a json string object
 	def send(self):
 		try:
 			# setup json
 			payload = json.dumps(self.json)
 
-			# connecting
-			print("Connecting to Localhost Queue")
-			connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
-			channel = connection.channel()
-
 			# sending
-			channel.queue_declare(queue="ist411")
-			channel.basic_publish(exchange="", routing_key="ist411", body=payload)
+			self.channel.basic_publish(exchange="", routing_key=QUEUENAME, body=payload)
 			print(" [x] Sent json data")
 
-			connection.close()
+			self.connection.close()
 			return True
 		except Exception as e:
 			print(e)
+
+class Receiver(BrokerBase):
+
+	def __init__(self):
+		self.connect()
 
 	# returns the json as a string object
 	def receive(self):
 		self.respone = None
 		try:
-			connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
-			channel = connection.channel()
-
-			channel.queue_declare(queue="ist411")
-
 			def callback(ch, method, properties, body):
 				print(" [x] Received %r" % body)
 				self.response = body
-				channel.stop_consuming()
+				self.channel.stop_consuming()
 
-			channel.basic_consume(callback, queue="ist411", no_ack=True)
+			self.channel.basic_consume(callback, queue=QUEUENAME, no_ack=True)
 
 			print(" [*] Waiting for messages. To exit press CTRL+C")
-			channel.start_consuming()
+			self.channel.start_consuming()
 			return self.response
+		# must exit program if user interruption
+		except(KeyboardInterrupt, SystemExit):
+			raise
 		except Exception as e:
 			print(e)
