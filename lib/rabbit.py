@@ -5,16 +5,16 @@
 # Course: IST411
 # Author: Kevin Mikus
 # Date Developed: 2017-11-10
-# Last Date Changed: 2017-11-10
-# Rev: 0.1
+# Last Date Changed: 2017-11-11
+# Rev: 0.2
 
-# Class file for RabbitMQ Message Broker
+# Class file for RabbitMQ Message Broker and cURL
 
-import pika, json
+import pika, json, sys, urllib.parse, urllib.request, signal
 
 # CONNECTION SETTINGS
 SERVERNAME = "localhost"
-QUEUENAME = "ist411"
+QUEUENAME = "team4"
 
 # base class for connection settings
 class BrokerBase:
@@ -23,7 +23,7 @@ class BrokerBase:
 		print("Connecting to Localhost Queue")
 		self.connection = pika.BlockingConnection(pika.ConnectionParameters(SERVERNAME))
 		self.channel = self.connection.channel()
-		self.channel.queue_declare(queue=QUEUENAME)
+		self.channel.queue_declare(queue=QUEUENAME, durable=True)
 
 class Sender(BrokerBase):
 
@@ -71,3 +71,29 @@ class Receiver(BrokerBase):
 			raise
 		except Exception as e:
 			print(e)
+
+# Class file for cURL library
+class Curler:
+
+	def __init__(self, url):
+		self.url = url
+
+	def getJson(self): 
+		try:
+			print("Getting json from ", self.url)
+
+			# clean url for parsing
+			clean_url = urllib.parse.urlparse(self.url)
+
+			# request body from url
+			response = urllib.request.urlopen(clean_url.geturl())
+			payload = response.read()
+			encoding = response.info().get_content_charset("utf-8")
+
+			# convert to json format
+			jsonStream = json.loads(payload.decode(encoding))
+			jsonDump = json.dumps(jsonStream, indent=4)
+			return jsonDump
+		except:
+			e = sys.exc_info()[0]
+			print("error: {}".format(e))
