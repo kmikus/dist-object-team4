@@ -1,5 +1,4 @@
 import Pyro4, zlib, sys, base64
-import Pyro4.expose
 SERVERNAME = "localhost"
 
 
@@ -19,7 +18,7 @@ class Client:
                 print("\nServer and client checksums are equal: ")
 
 @Pyro4.expose
-class Sender:
+class Sender(object):
         _data = ""
         def __init__(self, json):
                 self._data = json
