@@ -8,7 +8,7 @@
 # Last Date Changed: 2017-11-11
 # Rev: 0.2
 
-# Class file for RabbitMQ Message Broker and cURL
+# Class for RabbitMQ Message Broker and cURL
 
 import pika, json, sys, urllib.parse, urllib.request, signal
 
@@ -72,7 +72,7 @@ class Receiver(BrokerBase):
 		except Exception as e:
 			print(e)
 
-# Class file for cURL library
+# Class for cURL library
 class Curler:
 
 	def __init__(self, url):
@@ -97,3 +97,11 @@ class Curler:
 		except:
 			e = sys.exc_info()[0]
 			print("error: {}".format(e))
+
+# Class for AES Encryption
+class Crypt:
+
+	def __init__(self, data):
+		self.data = data
+
+	# TODO pad data rest of this
