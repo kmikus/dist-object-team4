@@ -1,3 +1,5 @@
 import pyro, json
 testJson = {"message": "I am the message"}
-test = pyro.Sender(testJson)
+Sender = pyro.Sender()
+test = Sender.startPyro(testJson)
+
