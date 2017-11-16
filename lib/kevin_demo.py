@@ -1,7 +1,7 @@
 import rabbit, json
 
-testJson = {"message": "I am the message"}
-myJson = json.dumps(testJson)
+url = "https://jsonplaceholder.typicode.com/posts/1/comments"
+myJson = rabbit.Curler(url).getJson()
 
 sender = rabbit.Sender(myJson)
 sender.send()
