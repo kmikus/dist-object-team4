@@ -41,10 +41,10 @@ class Sender(BrokerBase):
 
 			# sending
 			self.channel.basic_publish(exchange="", routing_key=QUEUENAME, body=payload)
-			print(" [x] Sent json data")
+			# print(" [x] Sent json data")
 
 			self.connection.close()
-			return True
+			return payload
 		except Exception as e:
 			print(e)
 
@@ -58,7 +58,7 @@ class Receiver(BrokerBase):
 		self.respone = None
 		try:
 			def callback(ch, method, properties, body):
-				print(" [x] Received %r" % body)
+				# print(" [x] Received data")
 				self.response = body
 				self.channel.stop_consuming()
 

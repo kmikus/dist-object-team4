@@ -1,33 +1,44 @@
-import rabbit, json
+import rabbit, json, mongolog
 
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
 
 # finished step message
-def fin():
+def fin(eventString, payload):
+	print(eventString)
 	print("Done")
+	record = log.prepRecord(eventString, payload)
+	log.insertRecord(record)
+
+# Start logger
+log = mongolog.Logger()
 
 # cURL
-print("Fetching json from ", url)
+eventString = "Fetching json from " + url + "..."
 myJson = rabbit.Curler(url).getJson()
-fin()
+fin(eventString, myJson)
 
 # AES Encryption
+eventString = "Encrypting data..."
 enc = rabbit.Encryptor(myJson)
-print("Encrypting data...")
 ciphertext = enc.encrypt()
-fin()
+fin(eventString, ciphertext)
 
 # RabbitMQ Send
+eventString = "Rabbit send..."
 sender = rabbit.Sender(ciphertext)
-sender.send()
+payload = sender.send()
+fin(eventString, payload)
 
 # RabbitMQ Receive
+eventString = "Rabbit receive..."
 recr = rabbit.Receiver()
 receivedData = recr.receive()
+fin(eventString, receivedData)
 
 # AES Decryption
+eventString = "Decrypting data..."
 dec = rabbit.Decryptor(receivedData)
-print("Decrypting data...")
 decryptedData = dec.decrypt()
-fin()
-print("Result: ", decryptedData)
+fin(eventString, decryptedData)
+
+print(decryptedData)
