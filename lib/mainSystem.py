@@ -3,6 +3,7 @@ import rabbit, json, mongolog, timer
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
 
 # The void is there to give a name to positional argument in order to make the dispatcher work but it is not used
+# Each lambda expression must return something to be used as the input (if required) in the next expression
 steps = [
 	{"name": "curl", "action": lambda void: rabbit.Curler(url).getJson(), "displayMessage": "Getting JSON data from " + url},
 	{"name": "encrypt", "action": lambda payload: rabbit.Encryptor(payload).encrypt(), "displayMessage": "Encrypting data..."},
