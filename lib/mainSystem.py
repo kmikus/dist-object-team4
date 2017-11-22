@@ -1,4 +1,4 @@
-import rabbit, json, mongolog
+import rabbit, json, mongolog, timer
 
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
 
@@ -13,10 +13,16 @@ steps = [
 
 payload = None
 log = mongolog.Logger()
+t = timer.Stopwatch()
 
+t.start()
 for step in steps:
 	payload = step["action"](payload)
 	record = log.prepRecord(step["name"], payload)
 	log.insertRecord(record)
 	print(step["displayMessage"])
 	print("Done.")
+	t.split()
+t.stop()
+print(t.getFormattedTotalTime())
+print(t.getFormattedSplitTimes())
