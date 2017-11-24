@@ -6,7 +6,7 @@ cinfo = {'cnopts':cnopts,'host':'192.168.1.45','username':'ftpuser','password':'
 class Client:
     def __init__(self):
         self.connection = pysftp.Connection(**cinfo)
-        print("Connection successful")
+        print('Connection successful')
 
     def get(self):
         self.connection.get('payloadTeam4.json')
