@@ -1,7 +1,8 @@
 import pysftp, sys
 cnopts = pysftp.CnOpts()
 cnopts.hostkeys = None
-cinfo = {'cnopts':cnopts, 'host':'Ians-MBP.local.tld', 'username':'ftpuser', 'password':'test1234', 'port':101}
+hostname = input("What is your ip address?")
+cinfo = {'cnopts':cnopts, 'host':hostname, 'username':'ftpuser', 'password':'test1234', 'port':101}
 
 try:
 	with pysftp.Connection(**cinfo) as sftp:
