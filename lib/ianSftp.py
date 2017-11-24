@@ -4,14 +4,19 @@ cnopts.hostkeys = None
 cinfo = {'cnopts':cnopts,'host':'192.168.1.45','username':'ftpuser','password':'test1234','port': 101}
 
 class Client:
-    def __init__(self):
+    def __init__(self, json):
         self.connection = pysftp.Connection(**cinfo)
+        self.json = json
         print('Connection successful')
 
     def get(self):
-        self.connection.get('payloadTeam4.json')
+        payload = self.json
+        self.connection.get(payload)
         print('Received payload')
+        return payload
 
     def put(self):
-        self.connection.put('payloadTeam4.json', remotepath='/home/ftpuser/payloadTeam4.json')
-        print('Send payload')
+        payload = self.json
+        self.connection.put(payload, remotepath='/home/ftpuser/payload.json')
+        print('Sent payload')
+        return payload
