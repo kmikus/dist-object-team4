@@ -1,5 +1,5 @@
 import json, rabbit, socket, ssl, pika
-from socket import *
+from socketTeam4 import *
 
 
 sender = socket.SSLSender()
