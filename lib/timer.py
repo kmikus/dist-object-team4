@@ -53,7 +53,7 @@ class Stopwatch:
 		mins = secs // 60
 		minsString = "{0:g}".format(mins)
 		modSecs = secs % 60
-		secsString = "{0:.2f}".format(modSecs)
+		secsString = "{0:.5f}".format(modSecs)
 		if modSecs < 10:
 			secsString = "0" + secsString
 		outputStr = minsString + ":" + secsString

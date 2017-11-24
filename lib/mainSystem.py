@@ -53,6 +53,7 @@ while(i < maxIter):
 	# Results
 	print(payload)
 	print("Total time: ", t.getFormattedTotalTime())
+	# TODO change timer so that the steps are associated to their times
 	print("Step times: ", t.getFormattedSplitTimes())
 	print("Cycle finished")
 	print("\n"*3)
