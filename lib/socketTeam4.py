@@ -1,8 +1,8 @@
 import socket, ssl, json
 
 class SSLSender:
-    def __init__(self, json):
-        self.json = json
+    def __init__(self, jsonData):
+        self.json = jsonData.encode("utf-8")
 
     def send(self):
         try:

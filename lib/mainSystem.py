@@ -1,7 +1,11 @@
-import rabbit, json, mongolog, timer, ianSftp
+import rabbit, json, mongolog, timer, ianSftp, socketTeam4
+
+# START THE FOLLOWING BEFORE RUNNING
+# rabbitmq-server, mongod, socketListner.py
 
 # Initial URL for JSON payload to cURL in
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
+fname = "payloadTeam4.json"
 
 # The void is there to give a name to positional argument in order to make the dispatcher work but it is not used
 # Each lambda expression must return something to be used as the input (if required) in the next expression
@@ -11,10 +15,17 @@ steps = [
 	{"name": "rabbitSend", "action": lambda payload: rabbit.Sender(payload).send(), "displayMessage": "Sending RabbitMQ message..."},
 	{"name": "rabbitReceive", "action": lambda void: rabbit.Receiver().receive(), "displayMessage": "Receiving RabbitMQ message..."},
 	{"name": "decrypt", "action": lambda payload: rabbit.Decryptor(payload).decrypt(), "displayMessage": "Decrypting data..."},
+
     # Dustin's Steps
-    # Dustin's final write must return fname to be used in Ian's sftp put
+    {"name": "sslSend", "action": lambda payload: socketTeam4.SSLSender(payload).send(), "displayMessage": "Sending payload through SSL..."},
+    # Socket listener is in separate file, TODO multithreading?
     
     # Ian's Steps
+    # TODO get fname returned from Dustin's methods instead of hardcoding
+    # The sftpSend step returns the filename, not the file
+    {"name": "sftpSend", "action": lambda void: ianSftp.Client(fname).put(), "displayMessage": "Putting payload on FTP Server..."},
+    # payload in this case is the filename, and not the json file
+    {"name": "sftpReceive", "action": lambda payload: ianSftp.Client(fname).get(payload), "displayMessage": "Getting payload from FTP Server..."}
 
     # Eugene's Steps
 
