@@ -1,4 +1,4 @@
-import rabbit, json, mongolog, timer
+import rabbit, json, mongolog, timer, ianSftp
 
 # Initial URL for JSON payload to cURL in
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
@@ -6,10 +6,18 @@ url = "https://jsonplaceholder.typicode.com/posts/1/comments"
 # The void is there to give a name to positional argument in order to make the dispatcher work but it is not used
 # Each lambda expression must return something to be used as the input (if required) in the next expression
 steps = [
+    # Kevin's Steps
 	{"name": "encrypt", "action": lambda payload: rabbit.Encryptor(payload).encrypt(), "displayMessage": "Encrypting data..."},
 	{"name": "rabbitSend", "action": lambda payload: rabbit.Sender(payload).send(), "displayMessage": "Sending RabbitMQ message..."},
 	{"name": "rabbitReceive", "action": lambda void: rabbit.Receiver().receive(), "displayMessage": "Receiving RabbitMQ message..."},
-	{"name": "decrypt", "action": lambda payload: rabbit.Decryptor(payload).decrypt(), "displayMessage": "Decrypting data..."}
+	{"name": "decrypt", "action": lambda payload: rabbit.Decryptor(payload).decrypt(), "displayMessage": "Decrypting data..."},
+    # Dustin's Steps
+    # Dustin's final write must return fname to be used in Ian's sftp put
+    
+    # Ian's Steps
+
+    # Eugene's Steps
+
 ]
 
 # INITIALIZATION - Timer and Logger and Counter

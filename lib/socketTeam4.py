@@ -1,12 +1,12 @@
-import socket, ssl, json, rabbit
-
-
+import socket, ssl, json
 
 class SSLSender:
-    def Send(self):
+    def __init__(self, json):
+        self.json = json
+
+    def send(self):
         try:
-            recr = rabbit.Receiver()
-            dustinsJson = recr.receive()
+            dustinsJson = self.json
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             ssl_sock = ssl.wrap_socket(s, ca_certs="server.crt", cert_reqs=ssl.CERT_REQUIRED)
             ssl_sock.connect(('localhost', 8080))
@@ -16,7 +16,7 @@ class SSLSender:
                 ssl_sock.close()
                 
 class SSLServer:
-    def Receive(self):
+    def receive(self):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             ssl_sock = ssl.wrap_socket(s, server_side=True, certfile="server.crt", keyfile="server.key")
