@@ -24,7 +24,7 @@ class SSLServer:
             ssl_sock.listen(5)
             while True:
                 (clientsocket, address) = ssl_sock.accept()
-                return clientsocket.recv(1024)
+                return clientsocket.recv(2048)
         except Exception as e:
             print(e)
             ssl_sock.close()   

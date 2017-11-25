@@ -1,7 +1,7 @@
 import pysftp, sys, json
 cnopts = pysftp.CnOpts()
 cnopts.hostkeys = None
-cinfo = {'cnopts':cnopts,'host':'128.118.251.244','username':'ftpuser','password':'test1234','port': 101}
+cinfo = {'cnopts':cnopts,'host':'oz-ist-linux-fa17-411','username':'ftpuser','password':'test1234','port': 101}
 
 class Client:
     def __init__(self, fname):
@@ -16,6 +16,6 @@ class Client:
 
     def get(self, getFilename):
         self.connection.get(getFilename)
-        fh = open(getFilename, "rb")
-        payload = json.loads(fh.read().decode("utf-8"))
+        fh = open(getFilename, "r")
+        payload = fh.read()
         return payload
