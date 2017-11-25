@@ -21,7 +21,7 @@ class Sender(object):
         _data = ""
         def startPyro(self, jsonData):
                 print("starting pyro")
-                self._data = json.dumps(jsonData)
+                self._data = jsonData
                 daemon = Pyro4.Daemon(host=SERVERNAME)
                 ns = Pyro4.locateNS()
                 uri = daemon.register(self)

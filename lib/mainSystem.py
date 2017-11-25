@@ -1,7 +1,7 @@
-import rabbit, json, mongolog, timer, ianSftp, socketTeam4
+import rabbit, json, mongolog, timer, ianSftp, socketTeam4, pyro
 
 # START THE FOLLOWING BEFORE RUNNING
-# rabbitmq-server, mongod, socketListner.py
+# socketListner.py, python3 -m Pyro4.naming, pyroSender.py
 
 # Initial URL for JSON payload to cURL in
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
@@ -25,9 +25,11 @@ steps = [
     # The sftpSend step returns the filename, not the file
     {"name": "sftpSend", "action": lambda void: ianSftp.Client(fname).put(), "displayMessage": "Putting payload on FTP Server..."},
     # payload in this case is the filename, and not the json file
-    {"name": "sftpReceive", "action": lambda payload: ianSftp.Client(fname).get(payload), "displayMessage": "Getting payload from FTP Server..."}
+    {"name": "sftpReceive", "action": lambda payload: ianSftp.Client(fname).get(payload), "displayMessage": "Getting payload from FTP Server..."},
 
     # Eugene's Steps
+	# Pyro sender is a daemon, separate file
+	{"name": "pyroReceive", "action": lambda void: pyro.Client().getJson(), "displayMessage": "Receiving data from Pyro4..."},
 
 ]
 
