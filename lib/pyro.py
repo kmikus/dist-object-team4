@@ -11,7 +11,7 @@ class Client:
                 data = base64.b64decode(data)
                 payload = zlib.decompress(data)
                 print("\nServer and client checksums are equal: "
-			+ str(zlib.crc32(payload)==object_receiver.get_checksum()))
+            + str(zlib.crc32(payload)==object_receiver.get_checksum()))
                 return payload.decode('utf8')
 
 @Pyro4.expose

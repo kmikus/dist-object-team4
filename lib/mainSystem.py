@@ -29,6 +29,7 @@ steps = [
 
     # Eugene's Steps
 	# Pyro sender is a daemon, separate file
+	{"name": "pyroSend", "action": lambda payload: pyro.Sender().startPyro(payload), "displayMessage": "Sending data from Pyro4"},
 	{"name": "pyroReceive", "action": lambda void: pyro.Client().getJson(), "displayMessage": "Receiving data from Pyro4..."},
 
 ]
