@@ -16,6 +16,6 @@ class Client:
 
     def get(self, getFilename):
         self.connection.get(getFilename)
-        fh = open(getFilename, "r")
+        fh = open(getFilename, "rb")
         payload = fh.read()
         return payload

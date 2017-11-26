@@ -1,7 +1,7 @@
-import rabbit, json, mongolog, timer, ianSftp, socketTeam4, pyro
+import rabbit, json, mongolog, timer, ianSftp, socketTeam4, pyroTeam4
 
 # START THE FOLLOWING BEFORE RUNNING
-# socketListner.py, python3 -m Pyro4.naming, pyroSender.py
+# socketListner.py, python3 -m Pyro4.naming, pyroTeam4_listener.py
 
 # Initial URL for JSON payload to cURL in
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
@@ -28,9 +28,8 @@ steps = [
     {"name": "sftpReceive", "action": lambda payload: ianSftp.Client(fname).get(payload), "displayMessage": "Getting payload from FTP Server..."},
 
     # Eugene's Steps
-	# Pyro sender is a daemon, separate file
-	{"name": "pyroSend", "action": lambda payload: pyro.Sender().startPyro(payload), "displayMessage": "Sending data from Pyro4"},
-	{"name": "pyroReceive", "action": lambda void: pyro.Client().getJson(), "displayMessage": "Receiving data from Pyro4..."},
+	{"name": "pyroSend", "action": lambda payload: pyroTeam4.Sender(payload).send(), "displayMessage": "Sending data from Pyro4"},
+	# Pyro listener is a daemon, separate file
 
 ]
 
