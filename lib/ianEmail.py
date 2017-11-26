@@ -18,6 +18,6 @@ class Email:
             msg['Subject'] = self.subject
             msg['From'] = self.fromAdd
             msg['To'] = self.toAdd
-            self.connection.sendmail(self.fromAdd, self.toAdd, self.msg.as_string())
+            self.connection.sendmail(self.fromAdd, self.toAdd, msg.as_string())
         except Exception as e:
             print("Error {}".format(e.args[0]))
