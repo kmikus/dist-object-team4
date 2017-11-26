@@ -1,3 +1,11 @@
+# Project: Team 4 Final Project
+# Purpose Details: use pysftp to get and put json payload
+# Course: IST 411
+# Author: Ian Roach
+# Date Developed: 11/23/17
+# Last Date Changed: 11/23/17
+# Rev: 1.0.1
+
 import pysftp, sys, json
 cnopts = pysftp.CnOpts()
 cnopts.hostkeys = None

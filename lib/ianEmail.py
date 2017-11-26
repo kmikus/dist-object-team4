@@ -1,5 +1,10 @@
-#Author Ian Roach
-#Date Developed: 11/26/17
+# Project: Final Project
+# Purpose Details: Sends an email to psu account
+# Course: IST 411
+# Author: Ian Roach
+# Date Developed: 11/26/17
+# Last Date Changed: 11/26/17
+# Rev: 1.0.1
 
 import smtplib
 from email.mime.text import MIMEText
