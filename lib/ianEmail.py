@@ -1,4 +1,6 @@
 #Author Ian Roach
+#Date Developed: 11/26/17
+
 import smtplib
 from email.mime.text import MIMEText
 
