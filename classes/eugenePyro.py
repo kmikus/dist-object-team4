@@ -19,7 +19,7 @@ class Client:
                 payload = zlib.decompress(data)
                 print("\nServer and client checksums are equal: "
             + str(zlib.crc32(payload)==object_receiver.get_checksum()))
-                return payload.decode('utf8')
+                return payload
 
 @Pyro4.expose
 class Sender(object):
@@ -37,9 +37,9 @@ class Sender(object):
         def get_compress(self):
                 try:
                         print("Compressing the Payload and sending as object")
-                        return zlib.compress(self._data.encode('utf8'))
+                        return zlib.compress(self._data)
                 except Exception as e:
                         print(e)
         def get_checksum(self):
                 print("Calculating and returning checksum")
-                return zlib.crc32(self._data.encode('utf8'))
+                return zlib.crc32(self._data)
