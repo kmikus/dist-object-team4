@@ -7,6 +7,7 @@
 # Rev: 0.2
 import Pyro4, zlib, sys, base64, json
 SERVERNAME = "localhost"
+daemon = Pyro4.Daemon(host=SERVERNAME)
 
 class Client:
         def __init__(self):
@@ -26,14 +27,15 @@ class Sender(object):
         def __init__(self):
                 pass
         _data = ""
-        def startPyro(self, jsonData):
-                print("starting pyro")
+        def loadData(self, jsonData):
                 self._data = jsonData
-                daemon = Pyro4.Daemon(host=SERVERNAME)
+        def startPyro(self):
                 ns = Pyro4.locateNS()
                 uri = daemon.register(self)
                 ns.register("myPyro", uri)
                 daemon.requestLoop()
+        def stopPyro(self):
+                daemon.shutdown()
         def get_compress(self):
                 try:
                         print("Compressing the Payload and sending as object")

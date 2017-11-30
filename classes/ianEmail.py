@@ -17,9 +17,9 @@ class Email:
         self.fromAdd = fromAdd
         self.toAdd = toAdd
 
-    def sendMail(self):
+    def sendMail(self, payload):
         try:
-            msg = MIMEText("This is an email from team4s' final project.")
+            msg = MIMEText(payload)
             msg['Subject'] = self.subject
             msg['From'] = self.fromAdd
             msg['To'] = self.toAdd

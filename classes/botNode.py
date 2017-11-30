@@ -6,14 +6,26 @@
 # Last Date Changed: 2017-11-29
 # Rev: 0.4
 
-import ianSftp, eugenePyro
+import ianSftp, ianEmail, ianHmac, eugenePyro, teamFourMongolog
+
+log = teamFourMongolog.Logger()
+log.insertRecord("Bottom node start", None)
 
 # pull file from sftp server
 fname = "payloadTeam4.json"
 payload = ianSftp.Client().get(fname)
+payload = ianHmac.Hmac().unwrap().encode("utf-8")
 print(payload)
 
-# TODO verify hmac and send via e-mail
+log.insertRecord("Bottom node receive", payload)
+
+emailSender = ianEmail.Email("Test subject", "kzm5599@psu.edu", "kzm5599@psu.edu")
+emailSender.sendMail(payload.decode("utf-8"))
 
 # starting pyro with payload data
-eugenePyro.Sender().startPyro(payload)
+pyroListener = eugenePyro.Sender()
+pyroListener.loadData(payload)
+print("Pyro listener running...")
+print("Please run leftNode.py")
+log.insertRecord("Bottom node send", payload)
+pyroListener.startPyro()

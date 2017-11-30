@@ -24,7 +24,8 @@ class Logger:
 		return record
 
 	# record should be dictionary format compatable with mongo
-	def insertRecord(self, record):
+	def insertRecord(self, eventString, payload):
+		record = self.prepRecord(eventString, payload)
 		client = MongoClient(self.server, self.port)
 		db = client.dist_system_team4
 		collection = db.log
