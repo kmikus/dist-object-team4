@@ -6,10 +6,11 @@
 # Last Date Changed: 2017-11-29
 # Rev: 0.4
 
-import kevinRabbit, dustinSocket, teamFourMongolog
+import kevinRabbit, dustinSocket, teamFourMongolog, datetime
 
+startTime = datetime.datetime.utcnow()
 log = teamFourMongolog.Logger()
-log.insertRecord("Starting top node", None)
+log.insertRecord("Top node start", None)
 
 # curling in JSON
 url = "https://jsonplaceholder.typicode.com/posts/1/comments" 
@@ -28,6 +29,15 @@ payload = rabRecr.receive()
 
 # decrypt payload
 payload = kevinRabbit.Decryptor(payload).decrypt()
+
+# final results
 print(payload)
-print("\n Transmission successful!")
+print("\nRound trip successful!")
 log.insertRecord("Top node receive", payload)
+
+# get time information
+stopTime = datetime.datetime.utcnow()
+roundtripTime = stopTime - startTime
+print("Round trip time: ", roundtripTime)
+
+log.printTimes(startTime)

@@ -18,7 +18,7 @@ class Hmac:
 		md5_sig = hmac.new(secret.encode(), digestmod='md5').hexdigest()
 		sha1_sig = hmac.new(secret.encode(), digestmod='sha1').hexdigest()
 		payload_dict = {}
-		payload_dict['body'], payload_dict['md5'], payload_dict['sha1'] = body, md5_sig, sha1_sig
+		payload_dict['body'], payload_dict['md5'], payload_dict['sha1'	] = body, md5_sig, sha1_sig
 		with open(fname, 'w') as outFile:
 			outFile.write(json.dumps(payload_dict, indent=4))
 

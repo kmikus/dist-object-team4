@@ -6,7 +6,7 @@
 # Last Date Changed: 2017-11-26
 # Rev: 0.3
 
-import time
+import time, hmac, json
 
 class Stopwatch:
 
