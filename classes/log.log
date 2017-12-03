@@ -1,0 +1,71 @@
+Help on module eugenePyro:
+
+NNAAMMEE
+    eugenePyro - Module for Pyro4 and compressing services
+
+CCLLAASSSSEESS
+    builtins.object
+        Client
+        Sender
+    
+    class CClliieenntt(builtins.object)
+     |  Class for Pyro4 client that can use registered daemon
+     |  
+     |  Methods defined here:
+     |  
+     |  ____iinniitt____(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ggeettJJssoonn(self)
+     |      Looks registered daemon, receives compressed object, docompresses and validates
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  ____ddiicctt____
+     |      dictionary for instance variables (if defined)
+     |  
+     |  ____wweeaakkrreeff____
+     |      list of weak references to the object (if defined)
+    
+    class SSeennddeerr(builtins.object)
+     |  Class for Pyro4 sender and file compressor with exposed methods
+     |  
+     |  Methods defined here:
+     |  
+     |  ____iinniitt____(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ggeett__cchheecckkssuumm(self)
+     |      Calculates checksum for the original data
+     |  
+     |  ggeett__ccoommpprreessss(self)
+     |      Compresses data and returns it
+     |  
+     |  ggeett__iitteerraattiioonn(self)
+     |      Calculates number of calls for compressed data
+     |  
+     |  kkiillll__ppyyrroo(self)
+     |      Stops Pyro listener
+     |  
+     |  sseett__ddaattaa(self, data)
+     |      Sets data that is compressed
+     |  
+     |  ssttaarrttPPyyrroo(self)
+     |      Initializes Pyro daemon and starts listener
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  ____ddiicctt____
+     |      dictionary for instance variables (if defined)
+     |  
+     |  ____wweeaakkrreeff____
+     |      list of weak references to the object (if defined)
+
+DDAATTAA
+    SSEERRVVEERRNNAAMMEE = 'localhost'
+
+FFIILLEE
+    /home/Team4/dist-object-team4/classes/eugenePyro.py
+
