@@ -8,10 +8,11 @@
 
 # Unit tests
 
-import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime
+import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime, ianEmail, ianHmac, ianSftp, threading
 
 # DO NOT EDIT THESE VALUES
 testJson = '{"test": "test"}'
+testBinJson = b'{"test": "test"}'
 testJsonEncrypted = b'\x9b\xc5\x1dQm\x82\x99b\xf8\xc2\xe5\xac\x19\xcb\xf7\xb5f\x08\x0c\x8b\x87\xa5\xd8\xa1\xfb\x01\x1a\xa4\xf3kG\x88'
 testEventString = "receive"
 testPayload = b"Testing"
@@ -121,20 +122,67 @@ class EugenePyroTest(unittest.TestCase):
                 self.assertEqual(zlib.crc32(testJson.encode()), self.sender.get_checksum())
 
 class DustinSocketTest(unittest.TestCase):
-
-    # Creating objects for testing
-    def setUp(self):
-        self.sslsender = dustinSocket.SSLSender(testJson)
-        self.sslserver = dustinSocket.SSLServer()
-
-    def tearDown(self):
-        self.sslsender = None
-        self.sslserver = None
+           # Creating objects for testing
+       def setUp(self):
+               self.sender = dustinSocket.SSLSender(testJson)
+               self.server = dustinSocket.SSLServer()
+       def tearDown(self):
+               self.sender = None
+               self.client = None
 
        # Methods testing
 
-    def test_send(self):
-        self.assertIsNot(self.sslsender.send(), None)
+       def test_send(self):
+           self.assertTrue(self.sender.createClientSocket())
+       
+       def test_send(self):
+           self.assertTrue(self.server.createServerSocket())
+
+class IanEmailTest(unittest.TestCase):
+
+	# Creating objects for testing
+	def setUp(self):
+		self.email = ianEmail.Email('test','iar5060@psu.edu','iar5060@psu.edu')
+
+	def tearDown(self):
+		self.email = None
+
+	# Methods testing
+	def test_sendMail(self):
+		self.assertTrue(self.email.sendMail(testJson))
+
+class IanHmacTest(unittest.TestCase):
+
+	# Creating objects for testing
+	def setUp(self):
+		self.hmac = ianHmac.Hmac()
+
+	def tearDown(self):
+		self.hmac = None
+
+	# Methods testing
+	def test_wrap(self):
+		self.assertTrue(self.hmac.wrap(testBinJson))
+
+	def test_unwrap(self):
+		self.assertIsNot(self.hmac.unwrap(), None)
+
+class IanSftpTest(unittest.TestCase):
+
+	# Creating objects for testing
+	def setUp(self):
+		self.client = ianSftp.Client()
+
+	def tearDown(self):
+		self.client = None
+
+	# Methods testing
+	def test_put(self):
+		self.assertTrue(self.client.put("payloadTeam4.json"))
+
+	def test_get(self):
+		self.assertIsNot(self.client.get("payloadTeam4.json"), b'')
+
 
 # keep at bottom
 if __name__ == "__main__":

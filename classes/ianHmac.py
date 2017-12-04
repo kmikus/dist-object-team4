@@ -6,14 +6,18 @@
 # Last Date Changed: 11/26/17
 # Rev: 1.0.1
 
+"""Module for Hmac in distributed system"""
+
 import pysftp, sys, json, hmac, os
 
 fname = "payloadTeam4.json"
 secret = "ISTRocks"
 
 class Hmac:
+	"""Class that creates payload and verifies that they match"""
 
 	def wrap(self, jsonBinData):
+		"""creating json payload"""
 		body = jsonBinData.decode("utf-8")
 		md5_sig = hmac.new(secret.encode(), digestmod='md5').hexdigest()
 		sha1_sig = hmac.new(secret.encode(), digestmod='sha1').hexdigest()
@@ -21,8 +25,10 @@ class Hmac:
 		payload_dict['body'], payload_dict['md5'], payload_dict['sha1'] = body, md5_sig, sha1_sig
 		with open(fname, 'w') as outFile:
 			outFile.write(json.dumps(payload_dict, indent=4))
+		return True
 
 	def unwrap(self):
+		"""verifying they match"""
 		try:
 			with open (fname, "r") as fh:
 				decoded_json = json.load(fh)

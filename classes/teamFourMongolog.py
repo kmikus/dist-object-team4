@@ -66,4 +66,5 @@ class Logger:
 		messages.append(s)
 		for m in messages:
 			print(m)
+		return messages
 		

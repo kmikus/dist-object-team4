@@ -31,3 +31,4 @@ class Email:
 			self.connection.sendmail(self.fromAdd, self.toAdd, msg.as_string())
 		except Exception as e:
 			print("Error {}".format(e.args[0]))
+		return True
