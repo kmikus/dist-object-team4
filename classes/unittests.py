@@ -8,7 +8,7 @@
 
 # Unit tests
 
-import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime
+import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime, threading
 
 # DO NOT EDIT THESE VALUES
 testJson = '{"test": "test"}'
@@ -122,21 +122,12 @@ class EugenePyroTest(unittest.TestCase):
 
 class DustinSocketTest(unittest.TestCase):
 
-    # Creating objects for testing
-    def setUp(self):
-        self.sslsender = dustinSocket.SSLSender(testJson)
-        self.sslserver = dustinSocket.SSLServer()
-
-    def tearDown(self):
-        self.sslsender = None
-        self.sslserver = None
-
        # Methods testing
 
         
     def test_server(self):
         server = dustinSocket.SSLServer()
-        server_thread = threading.Thread(target=server.receiver())
+        server_thread = threading.Thread(target=server.receive())
         server_thread.start()
         
         time.sleep(0.000001)
