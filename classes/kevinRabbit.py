@@ -46,7 +46,7 @@ class Sender(BrokerBase):
 			# print(" [x] Sent json data")
 
 			self.connection.close()
-			return payload
+			return True
 		except Exception as e:
 			print(e)
 

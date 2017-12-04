@@ -42,13 +42,6 @@ class Logger:
 			result.append(rec)
 		return result
 
-	def getStrippedRecords(self, startTime):
-		result = []
-		records = self.getCurrentIterRecords(startTime)
-		for rec in records:
-			result.append({"event": rec["event"], "timestamp": rec["timestamp"]})
-		return result
-
 	def parseTimes(self, startTime):
 		recTimes = []
 		records = self.getCurrentIterRecords(startTime)
