@@ -8,11 +8,7 @@
 
 # Unit tests
 
-<<<<<<< HEAD
 import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime, ianEmail, ianHmac, ianSftp, threading
-=======
-import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime, threading
->>>>>>> 99ba8c06269a00523075dfbebdf27dc031ff69f9
 
 # DO NOT EDIT THESE VALUES
 testJson = '{"test": "test"}'
@@ -126,7 +122,7 @@ class EugenePyroTest(unittest.TestCase):
                 self.assertEqual(zlib.crc32(testJson.encode()), self.sender.get_checksum())
 
 class DustinSocketTest(unittest.TestCase):
-           # Creating objects for testing
+	   # Creating objects for testing
        def setUp(self):
                self.sender = dustinSocket.SSLSender(testJson)
                self.server = dustinSocket.SSLServer()
@@ -186,40 +182,6 @@ class IanSftpTest(unittest.TestCase):
 
 	def test_get(self):
 		self.assertIsNot(self.client.get("payloadTeam4.json"), b'')
-
-=======
-
-        
-    def test_server(self):
-        server = dustinSocket.SSLServer()
-        server_thread = threading.Thread(target=server.receive())
-        server_thread.start()
-        
-        time.sleep(0.000001)
-        
-        fake_client = socket.socket()
-        fake_client.settimeout(1)
-        fake_client.connect(('127.0.0.1', 7777))
-        fake_client.close()
-        
-        server_thread.join()
-    
-    def run_fake_server(self):
-        server_sock = socket.socket()
-        server_sock.bind(('127.0.0.1', 7777))
-        server_sock.listen(0)
-        server_sock.accept()
-        server_sock.close()
-
-    def test_client(self):
-        server_thread = threading.Thread(target=self.run_fake_server)
-        server_thread.start()
-    
-        client = dustinSocket.SSLSender(testJson)
-        client.send()
-    
-        server_thread.join()
->>>>>>> 99ba8c06269a00523075dfbebdf27dc031ff69f9
 
 # keep at bottom
 if __name__ == "__main__":
