@@ -133,8 +133,36 @@ class DustinSocketTest(unittest.TestCase):
 
        # Methods testing
 
-    def test_send(self):
-        self.assertIsNot(self.sslsender.send(), None)
+        
+    def test_server(self):
+        server = dustinSocket.SSLServer()
+        server_thread = threading.Thread(target=server.receiver())
+        server_thread.start()
+        
+        time.sleep(0.000001)
+        
+        fake_client = socket.socket()
+        fake_client.settimeout(1)
+        fake_client.connect(('127.0.0.1', 7777))
+        fake_client.close()
+        
+        server_thread.join()
+    
+    def run_fake_server(self):
+        server_sock = socket.socket()
+        server_sock.bind(('127.0.0.1', 7777))
+        server_sock.listen(0)
+        server_sock.accept()
+        server_sock.close()
+
+    def test_client(self):
+        server_thread = threading.Thread(target=self.run_fake_server)
+        server_thread.start()
+    
+        client = dustinSocket.SSLSender(testJson)
+        client.send()
+    
+        server_thread.join()
 
 # keep at bottom
 if __name__ == "__main__":
