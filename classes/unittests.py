@@ -8,12 +8,12 @@
 
 # Unit tests
 
-import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket
+import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime
 
 # DO NOT EDIT THESE VALUES
 testJson = '{"test": "test"}'
 testJsonEncrypted = b'\x9b\xc5\x1dQm\x82\x99b\xf8\xc2\xe5\xac\x19\xcb\xf7\xb5f\x08\x0c\x8b\x87\xa5\xd8\xa1\xfb\x01\x1a\xa4\xf3kG\x88'
-testEventString = "Unit Testing"
+testEventString = "receive"
 testPayload = b"Testing"
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
 
@@ -22,6 +22,7 @@ class MongologTest(unittest.TestCase):
     def setUp(self):
         self.log = teamFourMongolog.Logger()
         self.testRecord = self.log.prepRecord(testEventString, testPayload)
+        self.t = datetime.datetime.utcnow()
 
     def tearDown(self):
         self.log = None
@@ -34,6 +35,21 @@ class MongologTest(unittest.TestCase):
 
     def test_insertRecord(self):
         self.assertIsNot(self.log.insertRecord(testEventString, testPayload), None)
+
+    def test_getCurrentIterRecords(self):
+        self.log.insertRecord(testEventString, testPayload)
+        self.assertIsNot(self.log.getCurrentIterRecords(self.t), None)
+        self.assertIs(type(self.log.getCurrentIterRecords(self.t)), list)
+
+    def test_parseTimes(self):
+        for i in range(0, 3): self.log.insertRecord(testEventString, testPayload)
+        self.assertIsNot(self.log.parseTimes(self.t), None)
+        self.assertIs(type(self.log.parseTimes(self.t)), list)
+
+    def printTimes(self):
+        for i in range(0, 3): self.log.insertRecord(testEventString, testPayload)
+        self.assertIsNot(self.log.printTimes(self.t), None)
+        self.assertIs(type(self.log.printTimes(self.t)), list)
 
 class KevinRabbitTest(unittest.TestCase):
 
