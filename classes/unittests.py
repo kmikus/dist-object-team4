@@ -133,11 +133,8 @@ class DustinSocketTest(unittest.TestCase):
 
        # Methods testing
 
-#    def test_send(self):
-#        self.assertIsNot(self.sslsender.send(), None)
-#    def test_receive(self):
-#        self.assertEqual(len(self.sslserver.receive()), None)
-#        self.assertIsNot(self.sslserver.receive())
+    def test_send(self):
+        self.assertIsNot(self.sslsender.send(), None)
 
 # keep at bottom
 if __name__ == "__main__":
