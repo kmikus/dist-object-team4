@@ -14,14 +14,19 @@ class SSLSender:
     """Sender class to reference send method"""
     def __init__(self, jsonData):
         self.json = jsonData.encode("utf-8")
+        
+    def createClientSocket(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ssl_sock = ssl.wrap_socket(s, ca_certs="server.crt", cert_reqs=ssl.CERT_REQUIRED)
+        ssl_sock.connect(('localhost', 8081))
+        return ssl_sock
+        
 
     def send(self):
         """Sends the json through the ssl socket"""
         try:
             dustinsJson = self.json
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            ssl_sock = ssl.wrap_socket(s, ca_certs="server.crt", cert_reqs=ssl.CERT_REQUIRED)
-            ssl_sock.connect(('localhost', 8080))
+            ssl_sock = creatClientSocket()
             ssl_sock.send(dustinsJson)
         except Exception as e:
                 print(e)
@@ -29,12 +34,16 @@ class SSLSender:
                 
 class SSLServer:
     """Base class for receiving the json payload through the socket"""
+    def createServerSocket(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ssl_sock = ssl.wrap_socket(s, server_side=True, certfile="server.crt", keyfile="server.key")
+        ssl_sock.bind(('localhost', 8081))
+        return ssl_sock
+    
     def receive(self):
         """Method for receiving and returning the json data"""
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            ssl_sock = ssl.wrap_socket(s, server_side=True, certfile="server.crt", keyfile="server.key")
-            ssl_sock.bind(('localhost', 8080))
+            ssl_sock = createServerSocket()
             ssl_sock.listen(5)
             while True:
                 (clientsocket, address) = ssl_sock.accept()
