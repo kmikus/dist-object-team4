@@ -18,44 +18,62 @@ testEventString = "receive"
 testPayload = b"Testing"
 url = "https://jsonplaceholder.typicode.com/posts/1/comments"
 
+"""Unit testing for all class files"""
+
 class MongologTest(unittest.TestCase):
-    
+    """Unit tests for the teamFourMongolog module.
+    The teamFourMongolog module contains the logging and timer functionality."""
+
     def setUp(self):
+        """Creating objects and instance variables necessary for mongo unit tests."""
         self.log = teamFourMongolog.Logger()
         self.testRecord = self.log.prepRecord(testEventString, testPayload)
         self.t = datetime.datetime.utcnow()
 
     def tearDown(self):
+        """Cleaning up previously set up objects"""
         self.log = None
+        self.testRecord = None
+        self.t = None
 
     # Methods testing
 
     def test_prepRecord(self):
+        """Method for appending utcnow() timestamp to record and returns the dict to be used in insertRecord() method."""
         self.assertEqual(len(self.testRecord), 3)
         self.assertIs(type(self.testRecord), dict)
 
     def test_insertRecord(self):
+        """Inserts a record into the MongoDB log collection and return the postid of the record."""
         self.assertIsNot(self.log.insertRecord(testEventString, testPayload), None)
 
     def test_getCurrentIterRecords(self):
+        """Retrieves the records for the current loop of the system and returns them in a list.
+        This will return all records (events) after topNode.py is run and will reset on each successive run."""
         self.log.insertRecord(testEventString, testPayload)
         self.assertIsNot(self.log.getCurrentIterRecords(self.t), None)
         self.assertIs(type(self.log.getCurrentIterRecords(self.t)), list)
 
     def test_parseTimes(self):
+        """Returns all of the node to node time differences in a list.
+        This works by retreiving all of the current iteration records and subtracting the difference in receive times.
+        The first differences, topNode to rightNode, uses topNodes start time instead of receive."""
         for i in range(0, 3): self.log.insertRecord(testEventString, testPayload)
         self.assertIsNot(self.log.parseTimes(self.t), None)
         self.assertIs(type(self.log.parseTimes(self.t)), list)
 
     def printTimes(self):
+        """Prints the differences in a readable format to stdout. Returns the messages in a list."""
         for i in range(0, 3): self.log.insertRecord(testEventString, testPayload)
         self.assertIsNot(self.log.printTimes(self.t), None)
         self.assertIs(type(self.log.printTimes(self.t)), list)
 
 class KevinRabbitTest(unittest.TestCase):
+    """Unit tests for the kevinRabbit module
+    This includes methods for rabbitMQ, cURL, and AES Encryption."""
 
-    # Creating objects for testing
-    def setUp(self):
+     def setUp(self):
+        """Creating objects and instance variables necessary for kevinRabbit unit tests."""
         self.sender = kevinRabbit.Sender(testJson)
         self.receiver = kevinRabbit.Receiver()
         self.curler = kevinRabbit.Curler(url)
@@ -63,6 +81,7 @@ class KevinRabbitTest(unittest.TestCase):
         self.decryptor = kevinRabbit.Decryptor(testJsonEncrypted)
 
     def tearDown(self):
+        """Cleaning up previously set up objects."""
         self.sender = None
         self.receiver = None
         self.curler = None
@@ -72,25 +91,32 @@ class KevinRabbitTest(unittest.TestCase):
     # Methods testing
 
     def test_send(self):
+        """Sends a message using to the rabbit queue. Returns true if successful."""
         self.assertTrue(self.sender.send())
 
     def test_receive(self):
+        """Receives one message from the broker and stops consuming. Returns the message body."""
         self.sender.send()
         self.assertIsNot(self.receiver.receive(), None)
 
     def test_getJson(self):
+        """Uses cURL to retrieve JSON from predetermined URL. Returns the JSON in utf-8."""
         self.assertIsNot(self.curler.getJson(), None)
 
     def test_pad(self):
+        """Pads the input to a number divisible by 16 for use with AES encryption."""
         self.assertEqual(len(self.encryptor.pad()), 32)
         self.assertIsNot(self.encryptor.pad(), None)
 
     def test_encrypt(self):
+        """Uses AES to encrypt the data in the constructor and returns the ciphertext.
+        Uses a default key and IV but they can be overridden with named params."""
         self.assertEqual(len(self.encryptor.encrypt()), 32)
         self.assertIsNot(self.encryptor.encrypt(), None)
 
     def test_decrypt(self):
-        ciphertext = self.encryptor.encrypt()
+        """Decrypts the ciphertext from the constructor and returns the plaintext.
+        Uses a default key and IV but they can be overridden with named params."""
         self.assertEqual(self.decryptor.decrypt(), testJson)
         self.assertIs(type(self.decryptor.decrypt()), str)
 
