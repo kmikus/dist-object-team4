@@ -26,7 +26,7 @@ class SSLSender:
         """Sends the json through the ssl socket"""
         try:
             dustinsJson = self.json
-            ssl_sock = creatClientSocket()
+            ssl_sock = self.createClientSocket()
             ssl_sock.send(dustinsJson)
         except Exception as e:
                 print(e)
@@ -43,7 +43,7 @@ class SSLServer:
     def receive(self):
         """Method for receiving and returning the json data"""
         try:
-            ssl_sock = createServerSocket()
+            ssl_sock = self.createServerSocket()
             ssl_sock.listen(5)
             while True:
                 (clientsocket, address) = ssl_sock.accept()

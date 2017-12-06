@@ -72,7 +72,7 @@ class KevinRabbitTest(unittest.TestCase):
     """Unit tests for the kevinRabbit module
     This includes methods for rabbitMQ, cURL, and AES Encryption."""
 
-     def setUp(self):
+    def setUp(self):
         """Creating objects and instance variables necessary for kevinRabbit unit tests."""
         self.sender = kevinRabbit.Sender(testJson)
         self.receiver = kevinRabbit.Receiver()
@@ -123,36 +123,37 @@ class KevinRabbitTest(unittest.TestCase):
 class EugenePyroTest(unittest.TestCase):
         """Creating module for testing EugenePyroTest"""
         def setUp(self):
-        """Creating object for testing"""
-                self.client = eugenePyro.Client()
-                self.sender = eugenePyro.Sender()
+            """Creating object for testing"""
+            self.client = eugenePyro.Client()
+            self.sender = eugenePyro.Sender()
         def tearDown(self):
-        """Cleaning up objects"""
-                self.sender = None
-                self.client = None
+            """Cleaning up objects"""
+            self.sender = None
+            self.client = None
 
         # Methods testing
 
         def testDataSet(self):
-                """verifies data is not modified by class when it is set up"""
-                self.sender.set_data(testJson)
-                self.assertIsNot(self.sender.get_data(), None)
-                self.assertEqual(testJson, self.sender.get_data())
+            """verifies data is not modified by class when it is set up"""
+            self.sender.set_data(testJson)
+            self.assertIsNot(self.sender.get_data(), None)
+            self.assertEqual(testJson, self.sender.get_data())
 
         def testCompression(self):
-                """compresses data. decompresses it with client call and verifies that data is the same"""
-                self.sender.set_data(testJson.encode())
-                compressed_obj = self.sender.get_compress()
-                data = self.client.get_decompress(compressed_obj)
-                data = data.decode("utf-8")
-                self.assertEqual(testJson, data)
+            """compresses data. decompresses it with client call and verifies that data is the same"""
+            self.sender.set_data(testJson.encode())
+            compressed_obj = self.sender.get_compress()
+            data = self.client.get_decompress(compressed_obj)
+            data = data.decode("utf-8")
+            self.assertEqual(testJson, data)
+
         def testChecksum(self):
-                """ calculates checksums on client and sender and verifies that it is the same"""
-                self.sender.set_data(testJson.encode())
-                self.assertEqual(zlib.crc32(testJson.encode()), self.sender.get_checksum())
+            """ calculates checksums on client and sender and verifies that it is the same"""
+            self.sender.set_data(testJson.encode())
+            self.assertEqual(zlib.crc32(testJson.encode()), self.sender.get_checksum())
 
 class DustinSocketTest(unittest.TestCase):
-	   # Creating objects for testing
+      # Creating objects for testing
        def setUp(self):
                self.sender = dustinSocket.SSLSender(testJson)
                self.server = dustinSocket.SSLServer()
@@ -170,48 +171,48 @@ class DustinSocketTest(unittest.TestCase):
 
 class IanEmailTest(unittest.TestCase):
 
-	# Creating objects for testing
-	def setUp(self):
-		self.email = ianEmail.Email('test','iar5060@psu.edu','iar5060@psu.edu')
+   # Creating objects for testing
+   def setUp(self):
+      self.email = ianEmail.Email('test','iar5060@psu.edu','iar5060@psu.edu')
 
-	def tearDown(self):
-		self.email = None
+   def tearDown(self):
+      self.email = None
 
-	# Methods testing
-	def test_sendMail(self):
-		self.assertTrue(self.email.sendMail(testJson))
+   # Methods testing
+   def test_sendMail(self):
+      self.assertTrue(self.email.sendMail(testJson))
 
 class IanHmacTest(unittest.TestCase):
 
-	# Creating objects for testing
-	def setUp(self):
-		self.hmac = ianHmac.Hmac()
+   # Creating objects for testing
+   def setUp(self):
+      self.hmac = ianHmac.Hmac()
 
-	def tearDown(self):
-		self.hmac = None
+   def tearDown(self):
+      self.hmac = None
 
-	# Methods testing
-	def test_wrap(self):
-		self.assertTrue(self.hmac.wrap(testBinJson))
+   # Methods testing
+   def test_wrap(self):
+      self.assertTrue(self.hmac.wrap(testBinJson))
 
-	def test_unwrap(self):
-		self.assertIsNot(self.hmac.unwrap(), None)
+   def test_unwrap(self):
+      self.assertIsNot(self.hmac.unwrap(), None)
 
 class IanSftpTest(unittest.TestCase):
 
-	# Creating objects for testing
-	def setUp(self):
-		self.client = ianSftp.Client()
+   # Creating objects for testing
+   def setUp(self):
+      self.client = ianSftp.Client()
 
-	def tearDown(self):
-		self.client = None
+   def tearDown(self):
+      self.client = None
 
-	# Methods testing
-	def test_put(self):
-		self.assertTrue(self.client.put("payloadTeam4.json"))
+   # Methods testing
+   def test_put(self):
+      self.assertTrue(self.client.put("payloadTeam4.json"))
 
-	def test_get(self):
-		self.assertIsNot(self.client.get("payloadTeam4.json"), b'')
+   def test_get(self):
+      self.assertIsNot(self.client.get("payloadTeam4.json"), b'')
 
 # keep at bottom
 if __name__ == "__main__":
