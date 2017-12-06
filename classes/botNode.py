@@ -8,6 +8,10 @@
 import ianSftp, eugenePyro, ianEmail, ianHmac, teamFourMongolog
 from threading import Thread
 """ class that is responsible for actions of the bottom node"""
+
+# This value should be false for running on IST Server, and true to run locally
+fixDnsResolve = True
+
 def threaded_function(PyroObject):
    """method to run pyro as separate thred"""
    PyroObject.startPyro()
@@ -25,7 +29,7 @@ if __name__ == "__main__":
    # pull file from sftp server
    fname = "payloadTeam4.json"
    try:
-      payload = ianSftp.Client().get(fname)
+      payload = ianSftp.Client(fixDnsResolve).get(fname)
       payload = ianHmac.Hmac().unwrap().encode("utf-8")
    except Exception as e:
       print(e)
@@ -37,7 +41,7 @@ if __name__ == "__main__":
    try:
       emailSender = ianEmail.Email("Test subject", "kzm5599@psu.edu", "kzm5599@psu.edu")
       emailSender.sendMail(payload.decode("utf-8"))
-   catch Excteption as e:
+   except Exception as e:
       print(e)
       print("Couldn't send email")
    # updating payload data with payload recieved in Sftp

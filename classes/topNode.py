@@ -40,6 +40,7 @@ try:
 
     # Listen for rabbit messages
     rabRecr = kevinRabbit.Receiver()
+    rabRecr.clearQueue()
     payload = rabRecr.receive()
 
     # Decrypt payload

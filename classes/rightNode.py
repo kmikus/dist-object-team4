@@ -8,6 +8,9 @@
 
 import dustinSocket, ianSftp, ianHmac, teamFourMongolog
 
+# This value should be false for running on IST Server, and true to run locally
+fixDnsResolve = True
+
 log = teamFourMongolog.Logger()
 log.insertRecord("Right node start", None)
 
@@ -30,6 +33,6 @@ fh.close()
 ianHmac.Hmac().wrap(payload)
 
 # put sftp file on server
-ianSftp.Client().put(fname)
+ianSftp.Client(fixDnsResolve).put(fname)
 log.insertRecord("Right node send", payload)
 print("Please run botNode.py")

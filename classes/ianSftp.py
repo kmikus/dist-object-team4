@@ -14,21 +14,26 @@ cnopts.hostkeys = None
 cinfo = {'cnopts':cnopts,'host':'oz-ist-linux-fa17-411','username':'ftpuser','password':'test1234','port': 101}
 
 class Client:
-	"""Class that puts payload and gets payload"""
-	def __init__(self):
-		"""initializes connection settings"""
-		self.connection = pysftp.Connection(**cinfo)
-		# print('Connection successful')
+    """Class that puts payload and gets payload"""
+    def __init__(self, fixDnsResolve=False):
+        """initializes connection settings"""
+        
+        # Hack to fix DNS issue
+        if fixDnsResolve:
+            cinfo['host'] = '128.118.251.244'
 
-	# Get fname from return value of file write method
-	def put(self, fname):
-		"""puts payload in remote path"""
-		self.connection.put(fname, remotepath='/home/ftpuser/payloadTeam4.json')
-		return fname
+        self.connection = pysftp.Connection(**cinfo)
+        # print('Connection successful')
 
-	def get(self, fname):
-		"""gets payload from sftp connection"""
-		self.connection.get(fname)
-		fh = open(fname, "rb")
-		payload = fh.read()
-		return payload
+    # Get fname from return value of file write method
+    def put(self, fname):
+        """puts payload in remote path"""
+        self.connection.put(fname, remotepath='/home/ftpuser/payloadTeam4.json')
+        return fname
+
+    def get(self, fname):
+        """gets payload from sftp connection"""
+        self.connection.get(fname)
+        fh = open(fname, "rb")
+        payload = fh.read()
+        return payload

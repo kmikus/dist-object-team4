@@ -10,6 +10,9 @@
 
 import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime, ianEmail, ianHmac, ianSftp, threading
 
+# This value should be false for running on IST Server, and true to run locally
+fixDnsResolve=True
+
 # DO NOT EDIT THESE VALUES
 testJson = '{"test": "test"}'
 testBinJson = b'{"test": "test"}'
@@ -98,6 +101,10 @@ class KevinRabbitTest(unittest.TestCase):
         """Receives one message from the broker and stops consuming. Returns the message body."""
         self.sender.send()
         self.assertIsNot(self.receiver.receive(), None)
+
+    def test_clearQueue(self):
+        self.sender.send()
+        self.assertTrue(self.receiver.clearQueue())
 
     def test_getJson(self):
         """Uses cURL to retrieve JSON from predetermined URL. Returns the JSON in utf-8."""
@@ -202,7 +209,7 @@ class IanSftpTest(unittest.TestCase):
 
    # Creating objects for testing
    def setUp(self):
-      self.client = ianSftp.Client()
+      self.client = ianSftp.Client(fixDnsResolve)
 
    def tearDown(self):
       self.client = None

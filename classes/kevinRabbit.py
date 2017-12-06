@@ -92,6 +92,10 @@ class Receiver(BrokerBase):
         except Exception as e:
             print(e)
 
+    def clearQueue(self):
+        """Flushes out the message queue to ensure only one message goes through"""
+        self.channel.queue_purge(queue=QUEUENAME)
+        return True
 
 class Curler:
 
