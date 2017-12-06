@@ -41,10 +41,14 @@ class Sender(object):
         def startPyro(self):
                 """Initializes Pyro daemon and starts listener"""
                 print("starting pyro")
-                ns = Pyro4.locateNS()
-                self._uri = self._daemon.register(self)
-                ns.register("myPyro", self._uri)
-                self._daemon.requestLoop()
+                try:
+                        ns = Pyro4.locateNS()
+                        self._uri = self._daemon.register(self)
+                        ns.register("myPyro", self._uri)
+                        self._daemon.requestLoop()
+                except Exception as e:
+                        print("Please start a name server:")
+                        print("python3 -m Pyro4.naming")
         def set_data(self, data):
                 """Sets data that is compressed"""
                 self._data = data
