@@ -121,29 +121,33 @@ class KevinRabbitTest(unittest.TestCase):
         self.assertIs(type(self.decryptor.decrypt()), str)
 
 class EugenePyroTest(unittest.TestCase):
-        
-        # Creating objects for testing
+        """Creating module for testing EugenePyroTest"""
         def setUp(self):
+        """Creating object for testing"""
                 self.client = eugenePyro.Client()
                 self.sender = eugenePyro.Sender()
         def tearDown(self):
+        """Cleaning up objects"""
                 self.sender = None
                 self.client = None
 
         # Methods testing
 
         def testDataSet(self):
+                """verifies data is not modified by class when it is set up"""
                 self.sender.set_data(testJson)
                 self.assertIsNot(self.sender.get_data(), None)
                 self.assertEqual(testJson, self.sender.get_data())
 
         def testCompression(self):
+                """compresses data. decompresses it with client call and verifies that data is the same"""
                 self.sender.set_data(testJson.encode())
                 compressed_obj = self.sender.get_compress()
                 data = self.client.get_decompress(compressed_obj)
                 data = data.decode("utf-8")
                 self.assertEqual(testJson, data)
         def testChecksum(self):
+                """ calculates checksums on client and sender and verifies that it is the same"""
                 self.sender.set_data(testJson.encode())
                 self.assertEqual(zlib.crc32(testJson.encode()), self.sender.get_checksum())
 
