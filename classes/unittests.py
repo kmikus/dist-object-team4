@@ -10,9 +10,6 @@
 
 import unittest, teamFourMongolog, kevinRabbit, eugenePyro, zlib, dustinSocket, datetime, ianEmail, ianHmac, ianSftp, threading
 
-# This value should be false for running on IST Server, and true to run locally
-fixDnsResolve=True
-
 # DO NOT EDIT THESE VALUES
 testJson = '{"test": "test"}'
 testBinJson = b'{"test": "test"}'
@@ -209,7 +206,7 @@ class IanSftpTest(unittest.TestCase):
 
    # Creating objects for testing
    def setUp(self):
-      self.client = ianSftp.Client(fixDnsResolve)
+      self.client = ianSftp.Client()
 
    def tearDown(self):
       self.client = None

@@ -8,6 +8,8 @@
 
 """Module for sftp in distributed system"""
 
+fixDnsResolveFlag = False
+
 import pysftp, sys, json
 cnopts = pysftp.CnOpts()
 cnopts.hostkeys = None
@@ -15,7 +17,7 @@ cinfo = {'cnopts':cnopts,'host':'oz-ist-linux-fa17-411','username':'ftpuser','pa
 
 class Client:
     """Class that puts payload and gets payload"""
-    def __init__(self, fixDnsResolve=False):
+    def __init__(self, fixDnsResolve=fixDnsResolveFlag):
         """initializes connection settings"""
         
         # Hack to fix DNS issue
