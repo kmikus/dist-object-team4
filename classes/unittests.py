@@ -174,49 +174,60 @@ class DustinSocketTest(unittest.TestCase):
            self.assertTrue(self.server.createServerSocket())
 
 class IanEmailTest(unittest.TestCase):
+	"""Creaing module for testing ianEmail"""
+	# Creating objects for testing
+	def setUp(self):
+		"""Creating object for testing"""
+		self.email = ianEmail.Email('test','iar5060@psu.edu','iar5060@psu.edu')
 
-   # Creating objects for testing
-   def setUp(self):
-      self.email = ianEmail.Email('test','iar5060@psu.edu','iar5060@psu.edu')
+	def tearDown(self):
+		"""Cleaning up objects"""
+		self.email = None
 
-   def tearDown(self):
-      self.email = None
-
-   # Methods testing
-   def test_sendMail(self):
-      self.assertTrue(self.email.sendMail(testJson))
+	# Methods testing
+	def test_sendMail(self):
+		"""Tests sendMail method from ianEmail"""
+		self.assertTrue(self.email.sendMail(testJson))
 
 class IanHmacTest(unittest.TestCase):
+	"""Creating module for testing ianHmac"""
+	# Creating objects for testing
+	def setUp(self):
+		"""Creating object for testing"""
+		self.hmac = ianHmac.Hmac()
 
-   # Creating objects for testing
-   def setUp(self):
-      self.hmac = ianHmac.Hmac()
+	def tearDown(self):
+		"""Cleaning up objects"""
+		self.hmac = None
 
-   def tearDown(self):
-      self.hmac = None
+	# Methods testing
+	def test_wrap(self):
+		"""Method for testing wrap() from ianHmac"""
+		self.assertTrue(self.hmac.wrap(testBinJson))
 
-   # Methods testing
-   def test_wrap(self):
-      self.assertTrue(self.hmac.wrap(testBinJson))
-
-   def test_unwrap(self):
-      self.assertIsNot(self.hmac.unwrap(), None)
+	def test_unwrap(self):
+		"""Method for testing upwrap() from ianHmac"""
+		self.assertIsNot(self.hmac.unwrap(), None)
 
 class IanSftpTest(unittest.TestCase):
+	"""Creating module for testing ianSftp"""
+	# Creating objects for testing
+	def setUp(self):
+		"""Creating object for testing"""
+		self.client = ianSftp.Client()
 
-   # Creating objects for testing
-   def setUp(self):
-      self.client = ianSftp.Client()
+	def tearDown(self):
+		"""Cleaning up objects"""
+		self.client = None
 
-   def tearDown(self):
-      self.client = None
+	# Methods testing
+	def test_put(self):
+		"""Method for testing put() from ianSftp"""
+		self.assertTrue(self.client.put("payloadTeam4.json"))
 
-   # Methods testing
-   def test_put(self):
-      self.assertTrue(self.client.put("payloadTeam4.json"))
-
-   def test_get(self):
-      self.assertIsNot(self.client.get("payloadTeam4.json"), b'')
+	def test_get(self):
+		"""Method for testing get() from ianSftp"""
+		self.assertIsNot(self.client.get("payloadTeam4.json"), b'')
 
 # keep at bottom
 if __name__ == "__main__":
