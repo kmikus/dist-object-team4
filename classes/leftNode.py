@@ -6,21 +6,30 @@
 # Last Date Changed: 2017-11-29
 # Rev: 0.4
 
+"""
+Left node module
+First: Left node starts by calling getJson() using Pyro4 which verifies the checksum
+Second: The json binary data is decoded back to utf8
+Third: The payload is encrypted based on the default settings of the Encryptor class
+Fourth: The payload is sent via rabbitMQ message broker using default settings
+"""
+
 import eugenePyro, kevinRabbit, Pyro4, teamFourMongolog
 
+# Start logging
 log = teamFourMongolog.Logger()
 log.insertRecord("Left node start", None)
 
-# receive pyro data
+# Receive pyro data
 payload = eugenePyro.Client().getJson()
 print(payload)
 log.insertRecord("Left node receive", payload)
 
 
-# encrypt data
+# Encrypt data
 payload = payload.decode("utf-8")
 encPayload = kevinRabbit.Encryptor(payload).encrypt()
 
-# send data through rabbit
+# Send data through rabbit
 kevinRabbit.Sender(encPayload).send()
 log.insertRecord("Left node send", payload)
