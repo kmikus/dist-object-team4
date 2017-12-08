@@ -14,39 +14,43 @@ Third: Puts the sftp file on the server.
 
 import dustinSocket, ianSftp, ianHmac, teamFourMongolog
 
-log = teamFourMongolog.Logger()
-log.insertRecord("Right node start", None)
-
-# receive socket data
 try:
-	print("Listening for socket data")
-	payload = dustinSocket.SSLServer().receive()
-	print("Data received")
-except Exception as e:
-	print(e)
-	print("Couldn't receive socket data..")
-print(payload)
-log.insertRecord("Right node receive", payload)
+	log = teamFourMongolog.Logger()
+	log.insertRecord("Right node start", None)
 
-# write file to system
-try:
-	fname = "payloadTeam4.json"
-	with open(fname, "wb") as fh:
-		fh.write(payload)
+	# receive socket data
+	try:
+		print("Listening for socket data")
+		payload = dustinSocket.SSLServer().receive()
+		print("Data received")
+	except Exception as e:
+		print(e)
+		print("Couldn't receive socket data..")
+	print(payload)
+	log.insertRecord("Right node receive", payload)
 
-	fh = open(fname, "rb")
-	payload = fh.read()
-	fh.close()
-except Exception as e:
-	print(e)
-	print("Something went wrong")
-ianHmac.Hmac().wrap(payload)
+	# write file to system
+	try:
+		fname = "payloadTeam4.json"
+		with open(fname, "wb") as fh:
+			fh.write(payload)
 
-# put sftp file on server
-try:
-	ianSftp.Client().put(fname)
-	log.insertRecord("Right node send", payload)
-except Exception as e:
+		fh = open(fname, "rb")
+		payload = fh.read()
+		fh.close()
+	except Exception as e:
+		print(e)
+		print("Something went wrong")
+	ianHmac.Hmac().wrap(payload)
+
+	# put sftp file on server
+	try:
+		ianSftp.Client().put(fname)
+		log.insertRecord("Right node send", payload)
+	except Exception as e:
+		print(e)
+		print("Couldn't put sftp file on server")
+	print("Please run botNode.py")
+except Exception as (e):
 	print(e)
-	print("Couldn't put sftp file on server")
-print("Please run botNode.py")
+	print("Something went wrong with right node")
