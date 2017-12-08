@@ -16,20 +16,21 @@ Fourth: The payload is sent via rabbitMQ message broker using default settings
 
 import eugenePyro, kevinRabbit, Pyro4, teamFourMongolog
 
-# Start logging
-log = teamFourMongolog.Logger()
-log.insertRecord("Left node start", None)
+if __name__ == "__main__":
+	# Start logging
+	log = teamFourMongolog.Logger()
+	log.insertRecord("Left node start", None)
 
-# Receive pyro data
-payload = eugenePyro.Client().getJson()
-print(payload)
-log.insertRecord("Left node receive", payload)
+	# Receive pyro data
+	payload = eugenePyro.Client().getJson()
+	print(payload)
+	log.insertRecord("Left node receive", payload)
 
 
-# Encrypt data
-payload = payload.decode("utf-8")
-encPayload = kevinRabbit.Encryptor(payload).encrypt()
+	# Encrypt data
+	payload = payload.decode("utf-8")
+	encPayload = kevinRabbit.Encryptor(payload).encrypt()
 
-# Send data through rabbit
-kevinRabbit.Sender(encPayload).send()
-log.insertRecord("Left node send", payload)
+	# Send data through rabbit
+	kevinRabbit.Sender(encPayload).send()
+	log.insertRecord("Left node send", payload)

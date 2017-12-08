@@ -28,9 +28,10 @@ class SSLSender:
             dustinsJson = self.json
             ssl_sock = self.createClientSocket()
             ssl_sock.send(dustinsJson)
+            return True
         except Exception as e:
                 print(e)
-                ssl_sock.close()
+                print("ERROR: Send failed")
                 
 class SSLServer:
     """Base class for receiving the json payload through the socket"""
