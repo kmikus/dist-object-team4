@@ -1,0 +1,8 @@
+README.rst
+setup.cfg
+setup.py
+dist_object_team4.egg-info/PKG-INFO
+dist_object_team4.egg-info/SOURCES.txt
+dist_object_team4.egg-info/dependency_links.txt
+dist_object_team4.egg-info/requires.txt
+dist_object_team4.egg-info/top_level.txt

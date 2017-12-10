@@ -1,0 +1,33 @@
+Metadata-Version: 1.2
+Name: dist-object-team4
+Version: 1.0.0
+Summary: A distributed system communication demonstration using JSON and various Python tools
+Home-page: https://github.com/kmikus/dist-object-team4
+Author: Kevin Mikus, Eugene Matavitski, Dustin Dimarcello, Ian Roach
+Author-email: kzm5599@psu.edu
+License: Other/Proprietary License
+Description-Content-Type: UNKNOWN
+Description: Distributed Object Computing Team 4 Final Project
+        =================================================
+        
+        This project is to demonstrate the use of several python libraries in transferring JSON data across several computers and returning it to its initial state. The project only supports Python 3 and does not support Python 2.
+        
+        The four python scripts should be run in separate terminals in order to demonstrate full functionality. The Pyro4 nameserver needs to be run in the background using the command ''python3 -m Pyro4.naming'' before starting the process.
+        
+        The nodes should be run in the following order:
+        
+        * topNode.py
+        * rightNode.py
+        * botNode.py
+        * leftNode.py
+        
+        The project source code can be found at 'https://github.com/kmikus/dist-object-team4'_.
+        
+Keywords: json python distributed cURL sftp rabbitmq socket smtp Pyro4 aes ssl hmac crc compression
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Students
+Classifier: Topic :: Software Development :: Education
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3
