@@ -12,4 +12,4 @@ The nodes should be run in the following order:
 * botNode.py
 * leftNode.py
 
-The project source code can be found at 'https://github.com/kmikus/dist-object-team4'_.
+The project source code can be found 'here <https://github.com/kmikus/dist-object-team4>'_.
