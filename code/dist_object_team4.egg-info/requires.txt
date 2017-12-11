@@ -1,5 +1,5 @@
-Pyro4
 pika
 pycrypto
-pymongo
 pysftp
+Pyro4
+pymongo
