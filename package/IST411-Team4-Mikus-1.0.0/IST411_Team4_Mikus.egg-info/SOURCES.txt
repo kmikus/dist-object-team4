@@ -1,6 +1,11 @@
 README.rst
 setup.cfg
 setup.py
+IST411_Team4_Mikus.egg-info/PKG-INFO
+IST411_Team4_Mikus.egg-info/SOURCES.txt
+IST411_Team4_Mikus.egg-info/dependency_links.txt
+IST411_Team4_Mikus.egg-info/requires.txt
+IST411_Team4_Mikus.egg-info/top_level.txt
 dist-object-team4/botNode.py
 dist-object-team4/dustinSocket.py
 dist-object-team4/eugenePyro.py
@@ -13,8 +18,3 @@ dist-object-team4/rightNode.py
 dist-object-team4/teamFourMongolog.py
 dist-object-team4/topNode.py
 dist-object-team4/unittests.py
-dist_object_team4.egg-info/PKG-INFO
-dist_object_team4.egg-info/SOURCES.txt
-dist_object_team4.egg-info/dependency_links.txt
-dist_object_team4.egg-info/requires.txt
-dist_object_team4.egg-info/top_level.txt

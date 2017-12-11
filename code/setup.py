@@ -22,7 +22,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     # General description
-    name = 'dist-object-team4',
+    name = 'IST411-Team4-Mikus',
     version = '1.0.0',
     description = 'A distributed system communication demonstration using JSON and various Python tools',
     long_description = long_description,
