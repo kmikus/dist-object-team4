@@ -3,7 +3,7 @@ Name: dist-object-team4
 Version: 1.0.0
 Summary: A distributed system communication demonstration using JSON and various Python tools
 Home-page: https://github.com/kmikus/dist-object-team4
-Author: Kevin Mikus, Eugene Matavitski, Dustin Dimarcello, Ian Roach
+Author: Kevin Mikus
 Author-email: kzm5599@psu.edu
 License: Other/Proprietary License
 Description-Content-Type: UNKNOWN
