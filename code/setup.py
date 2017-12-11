@@ -31,7 +31,7 @@ setup(
     url = 'https://github.com/kmikus/dist-object-team4',
 
     # Author details
-    author = 'Kevin Mikus, Eugene Matavitski, Dustin Dimarcello, Ian Roach',
+    author = 'Kevin Mikus',
     author_email = 'kzm5599@psu.edu',
 
     # Generic license
