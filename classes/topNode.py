@@ -25,7 +25,7 @@ if __name__ == "__main__":
 		log.insertRecord("Top node start", None)
 
 		# Using cURL to fetch initial JSON 
-		url = "https://jsonplaceholder.typicode.com/posts/1/comments" 
+		url = "http://time.jsontest.com/"
 		payload = kevinRabbit.Curler(url).getJson()
 
 		# Validate that payload exists, else exit
